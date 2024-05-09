@@ -15,13 +15,15 @@
     stages {
         stage('Prepare') {
             steps {
-                sh 'docker run --tls-verify=false -it --rm --name node-18-${GIT_COMMIT} nexus-ext.lab.pl/node:18.20.2 \
+                sh 'docker run --tls-verify=false -it --rm --name node-${GIT_COMMIT} nexus-ext.lab.pl/node:18.20.2 \
                 sh -c \'echo Node version: $(node -v) && echo NPM version: $(npm -v)\''
             }
         }
         stage('Build') {
             steps {
                 sh 'echo Version: $version'
+                sh 'docker run -it --rm --name node-${GIT_COMMIT} -v "$(pwd)":/usr/src/app -w /usr/src/app nexus-ext.lab.pl/node:18.20.2 \
+                sh -c \'npm ci\'' 
             }
         }
     }
