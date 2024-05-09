@@ -16,14 +16,14 @@
     stages {
         stage('Prepare') {
             steps {
-                sh 'podman run --tls-verify=false -it --rm --name node-${GIT_COMMIT} nexus-ext.lab.pl/lts-alpine3.19 \
+                sh 'podman run --tls-verify=false -it --rm --name node-${GIT_COMMIT} nexus-ext.lab.pl/node:lts-alpine3.19 \
                 sh -c \'echo Node version: $(node -v) && echo NPM version: $(npm -v)\''
             }
         }
         stage('Build') {
             steps {
                 sh 'echo Version: $version'
-                sh 'podman run -it --rm --name node-${GIT_COMMIT} -v "$(pwd)":/usr/src/app -w /usr/src/app nexus-ext.lab.pl/lts-alpine3.19 \
+                sh 'podman run -it --rm --name node-${GIT_COMMIT} -v "$(pwd)":/usr/src/app -w /usr/src/app nexus-ext.lab.pl/node:lts-alpine3.19 \
                 sh -c \'npm ci && npm run build\'' 
             }
         }
