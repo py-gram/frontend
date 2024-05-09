@@ -24,7 +24,7 @@
             steps {
                 sh 'echo Version: $version'
                 sh 'podman run -it --rm --name node-${GIT_COMMIT} -v "$(pwd)":/usr/src/app -w /usr/src/app nexus-ext.lab.pl/node:lts-alpine3.19 \
-                sh -c \'npm ci && npm run build\'' 
+                sh -c \'npm install && npm run build\'' 
             }
         }
         stage('Build image') {
