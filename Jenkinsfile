@@ -35,7 +35,7 @@
         stage('Push image to registry') {
             steps {
                 sh 'podman login -u podman -p podman123'
-                sh 'podman push localhost/pythongram-$name:$version nexus-int.lab.pl/pythongram-$name:$version'
+                sh 'podman push --tls-verify=false localhost/pythongram-$name:$version nexus-int.lab.pl/pythongram-$name:$version'
                 sh 'podman logout'
             }
         }
