@@ -29,7 +29,7 @@
         }
         stage('Build image') {
             steps {
-                sh 'podman build -t pythongram-$name:$version .'
+                sh 'podman build -t pythongram-$name:$version -f ./Dockerfile'
             }
         }
         stage('Push image to registry') {
