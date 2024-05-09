@@ -37,7 +37,7 @@ import { LockOutlined } from "@mui/icons-material";
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
             try {
-              const response = await axios.post('http://192.168.0.38:8000/api/users', user);
+              const response = await axios.post('http://pythongram-backend-service/api/users', user);
               if (response.status === 201) {
                 alert('User created successfully');
                 setUser({ first_name: '', last_name: '', age: '' });
