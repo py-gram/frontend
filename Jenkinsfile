@@ -23,7 +23,7 @@
             steps {
                 sh 'echo Version: $version'
                 sh 'docker run -it --rm --name node-${GIT_COMMIT} -v "$(pwd)":/usr/src/app -w /usr/src/app nexus-ext.lab.pl/node:18.20.2 \
-                sh -c \'npm ci\'' 
+                sh -c \'npm ci && npm build\'' 
             }
         }
     }
