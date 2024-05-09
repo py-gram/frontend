@@ -16,7 +16,7 @@
     stages {
         stage('Prepare') {
             steps {
-                sh 'docker run --tls-verify=false -it --rm --name node-${GIT_COMMIT} nexus-ext.lab.pl/node:18.20.2 \
+                sh 'podman run --tls-verify=false -it --rm --name node-${GIT_COMMIT} nexus-ext.lab.pl/node:18.20.2 \
                 sh -c \'echo Node version: $(node -v) && echo NPM version: $(npm -v)\''
             }
         }
