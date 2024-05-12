@@ -17,6 +17,8 @@ import { LockOutlined } from "@mui/icons-material";
     interface User {
         first_name: string;
         last_name: string;
+        login: string;
+        password: string;
         age: string;
     }
     
@@ -24,6 +26,8 @@ import { LockOutlined } from "@mui/icons-material";
         const [user, setUser] = useState<User>({
             first_name: '',
             last_name: '',
+            login: '',
+            password: '',
             age: ''
         });
         
@@ -40,7 +44,7 @@ import { LockOutlined } from "@mui/icons-material";
               const response = await axios.post('http://pythongram-backend-service/api/users', user);
               if (response.status === 201) {
                 alert('User created successfully');
-                setUser({ first_name: '', last_name: '', age: '' });
+                setUser({ first_name: '', last_name: '', login: '', password: '', age: '' });
               }
             } catch (error) {
               console.error('Error creating user:', error);
@@ -66,6 +70,26 @@ import { LockOutlined } from "@mui/icons-material";
                 <Typography variant="h5">Register</Typography>
                 <Box sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                name="login"
+                                required
+                                fullWidth
+                                id="login"
+                                label="Login"
+                                value={user.login}
+                                onChange={handleChange} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                name="password"
+                                required
+                                fullWidth
+                                id="password"
+                                label="Password"
+                                value={user.password}
+                                onChange={handleChange} />
+                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 name="first_name"

@@ -15,16 +15,14 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 
     interface User {
-        first_name: string;
-        last_name: string;
-        age: string;
+        login: string;
+        password: string;
     }
     
     const LoginForm: React.FC = () => {
         const [user, setUser] = useState<User>({
-            first_name: '',
-            last_name: '',
-            age: ''
+            login: '',
+            password: ''
         });
         
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +38,7 @@ import { LockOutlined } from "@mui/icons-material";
               const response = await axios.post('http://192.168.1.177:8000/api/users', user);
               if (response.status === 201) {
                 alert('User created successfully');
-                setUser({ first_name: '', last_name: '', age: '' });
+                setUser({ login: '', password: ''});
               }
             } catch (error) {
               console.error('Error creating user:', error);
@@ -63,37 +61,27 @@ import { LockOutlined } from "@mui/icons-material";
                 <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
                     <LockOutlined />
                 </Avatar>
-                <Typography variant="h5">Register</Typography>
+                <Typography variant="h5">Login</Typography>
                 <Box sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                name="first_name"
+                                name="login"
                                 required
                                 fullWidth
-                                id="first_name"
-                                label="Name"
-                                value={user.first_name}
+                                id="login"
+                                label="Login"
+                                value={user.login}
                                 onChange={handleChange} />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                name="last_name"
+                                name="password"
                                 required
                                 fullWidth
-                                id="last_name"
-                                label="Lastname"
-                                value={user.last_name}
-                                onChange={handleChange} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="age"
-                                required
-                                fullWidth
-                                id="age"
-                                label="Age"
-                                value={user.age}
+                                id="password"
+                                label="Password"
+                                value={user.password}
                                 onChange={handleChange} />
                         </Grid>
                     </Grid>
@@ -103,11 +91,11 @@ import { LockOutlined } from "@mui/icons-material";
                         sx={{ mt: 3, mb: 2 }}
                         onClick={handleSubmit}
                     >
-                        Register
+                        Login
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link to="/login">Already have an account?</Link>
+                            <Link to="/register">Do not have account yet?</Link>
                         </Grid>
                     </Grid>
                 </Box>
