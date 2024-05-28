@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import makeStyles from '@mui/material';
 
 import {
     Avatar,
@@ -15,20 +16,18 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 
     interface User {
+        username: string;
+        password: string;
         first_name: string;
         last_name: string;
-        login: string;
-        password: string;
-        age: string;
     }
     
     const LoginForm: React.FC = () => {
         const [user, setUser] = useState<User>({
-            first_name: '',
-            last_name: '',
-            login: '',
+            username: '',
             password: '',
-            age: ''
+            first_name: '',
+            last_name: ''
         });
         
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +40,10 @@ import { LockOutlined } from "@mui/icons-material";
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
             try {
-              const response = await axios.post('http://pythongram-backend-service/api/users', user);
-              if (response.status === 201) {
+              const response = await axios.post('http://localhost:8000/api/register', user);
+              if (response.status === 200) {
                 alert('User created successfully');
-                setUser({ first_name: '', last_name: '', login: '', password: '', age: '' });
+                setUser({ username: '', password: '', first_name: '', last_name: '' });
               }
             } catch (error) {
               console.error('Error creating user:', error);
@@ -72,12 +71,12 @@ import { LockOutlined } from "@mui/icons-material";
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                name="login"
+                                name="username"
                                 required
                                 fullWidth
                                 id="login"
                                 label="Login"
-                                value={user.login}
+                                value={user.username}
                                 onChange={handleChange} />
                         </Grid>
                         <Grid item xs={12}>
@@ -110,16 +109,6 @@ import { LockOutlined } from "@mui/icons-material";
                                 value={user.last_name}
                                 onChange={handleChange} />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                name="age"
-                                required
-                                fullWidth
-                                id="age"
-                                label="Age"
-                                value={user.age}
-                                onChange={handleChange} />
-                        </Grid>
                     </Grid>
                     <Button
                         fullWidth
@@ -131,7 +120,7 @@ import { LockOutlined } from "@mui/icons-material";
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link to="/login">Already have an account?</Link>
+                            <Link to="/">Already have an account?</Link>
                         </Grid>
                     </Grid>
                 </Box>

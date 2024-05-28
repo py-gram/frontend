@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import {
     Avatar,
@@ -15,15 +16,17 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 
     interface User {
-        login: string;
+        username: string;
         password: string;
     }
     
     const LoginForm: React.FC = () => {
         const [user, setUser] = useState<User>({
-            login: '',
+            username: '',
             password: ''
         });
+        
+        const navigate = useNavigate();
         
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             setUser({
@@ -35,14 +38,20 @@ import { LockOutlined } from "@mui/icons-material";
         const handleSubmit = async (e: React.FormEvent) => {
             e.preventDefault();
             try {
-              const response = await axios.post('http://192.168.1.177:8000/api/users', user);
-              if (response.status === 201) {
-                alert('User created successfully');
-                setUser({ login: '', password: ''});
-              }
+              const response = await axios.post('http://localhost:8000/api/login', user, { withCredentials: true });
+              if (response.status === 200) {
+                alert('User logged in successfully');
+                setUser({ username: '', password: ''});
+
+                const token = response.data
+                //console.debug('token: ', token)
+                localStorage.setItem('token', JSON.stringify(token));
+                
+                navigate('/home')
+            }
             } catch (error) {
-              console.error('Error creating user:', error);
-              alert('Failed to create user');
+              console.error('Login error:', error);
+              alert('Login error.');
             }
         };
 
@@ -66,12 +75,12 @@ import { LockOutlined } from "@mui/icons-material";
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                name="login"
+                                name="username"
                                 required
                                 fullWidth
                                 id="login"
                                 label="Login"
-                                value={user.login}
+                                value={user.username}
                                 onChange={handleChange} />
                         </Grid>
                         <Grid item xs={12}>
