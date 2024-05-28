@@ -38,7 +38,7 @@ const Homepage = () => {
     // Fetch user data from backend
     const fetchUserData = async () => {
       try {
-        const token = JSON.parse(localStorage.getItem('token') as string);
+        //const token = JSON.parse(localStorage.getItem('token') as string);
         
         //console.debug('token', token)
         const response = await axios.get('http://localhost:8000/api/user', {withCredentials: true} );
